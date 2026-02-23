@@ -33,6 +33,7 @@ class _SaleModuleState extends State<SaleModule> {
             decoration: InputDecoration(
               hint: Text("Customer Name"),
               prefixIcon: Icon(Icons.person_rounded),
+              suffixIcon: Icon(Icons.arrow_forward_ios_outlined, size: 15,),
             ),
           ),
           SizedBox(height: 21,),
@@ -43,6 +44,7 @@ class _SaleModuleState extends State<SaleModule> {
             decoration: InputDecoration(
               hint: Text("Select Category"),
               prefixIcon: Icon(Icons.category),
+              suffixIcon: Icon(Icons.arrow_forward_ios_outlined, size: 15,),
             ),
           ),
           SizedBox(height: 21,),
@@ -52,6 +54,7 @@ class _SaleModuleState extends State<SaleModule> {
             },
             decoration: InputDecoration(
               hint: Text("Select Transport"),
+              suffixIcon: Icon(Icons.arrow_forward_ios_outlined, size: 15,),
               prefixIcon: Icon(Icons.emoji_transportation),
             ),
           ),
@@ -74,7 +77,7 @@ class _SaleModuleState extends State<SaleModule> {
             decoration: InputDecoration(
               hint: Text("Add Item"),
               prefixIcon: Icon(Icons.add_shopping_cart),
-
+              suffixIcon: Icon(Icons.arrow_forward_ios_outlined, size: 15,),
             ),
           ),
           SizedBox(height: 31,),

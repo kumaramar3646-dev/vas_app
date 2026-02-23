@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:vas_app/data/model/model.dart';
 
 class DbHelper {
 
@@ -22,21 +23,21 @@ class DbHelper {
    /// customer table
    static const String tblCustomer = "customer";
    /// customer table column
-  // $colCustomerId integer primary key autoincrement,
-   //static const String colCustomerId = "customerId";
-   static const String colCustomerGst = "customerGst";
-   static const String colCustomerName = "customerName";
-   static const String colAccountType = "customerAccountType";
-   static const String colCustomerAddress1 = "customerAddress1";
-   static const String colCustomerAddress2 = "customerAddress2";
-   static const String colCustomerCity = "customerCity";
-   static const String colCustomerPinCode = "customerPinCode";
-   static const String colCustomerState = "customerState";
-   static const String colCustomerDistance = "customerDistance";
-   static const String colCustomerMobile = "customerMobile";
-   static const String colCustomerEmail = "customerEmail";
-   static const String colCustomerTransport = "customerTransport";
-   static const String colCustomerDiscount = "customerDiscount";
+
+   static String colCustomerId = "customerId";
+   static String colCustomerGst = "customerGst";
+   static String colCustomerName = "customerName";
+   static String colAccountType = "AccountType";
+   static String colCustomerAddress1 = "customerAddress1";
+   static String colCustomerAddress2 = "customerAddress2";
+   static String colCustomerCity = "customerCity";
+   static String colCustomerPinCode = "customerPinCode";
+   static String colCustomerState = "customerState";
+   static String colCustomerDistance = "customerDistance";
+   static String colCustomerMobile = "customerMobile";
+   static String colCustomerEmail = "customerEmail";
+   static String colCustomerTransport = "customerTransport";
+   static String colCustomerDiscount = "customerDiscount";
 
   Future<Database> initDB()async{
 
@@ -50,48 +51,59 @@ class DbHelper {
     return await openDatabase(dbPath, version: 1, onCreate: (db, version){
       /// create all table here
       ///Customer table
-      db.execute("create table $tblCustomer( $colCustomerGst text, $colCustomerName text, $colAccountType text, $colCustomerAddress1 text, $colCustomerAddress2 text, $colCustomerCity text, $colCustomerPinCode text, $colCustomerState text, $colCustomerDistance text, $colCustomerMobile text, $colCustomerEmail text, $colCustomerTransport text, $colCustomerDiscount text)");
+      db.execute("create table $tblCustomer($colCustomerId integer primary key autoincrement, $colCustomerGst text, $colCustomerName text, $colAccountType text, $colCustomerAddress1 text, $colCustomerAddress2 text, $colCustomerCity text, $colCustomerPinCode text, $colCustomerState text, $colCustomerDistance text, $colCustomerMobile text, $colCustomerEmail text, $colCustomerTransport text, $colCustomerDiscount text)");
       }
      );
    }
-    Future<bool> addCustomer({
-      required String colCustomerGst,
-      required String colCustomerName,
-      required String colAccountType,
-      required String colCustomerAddress1,
-      required String colCustomerAddress2,
-      required String colCustomerCity,
-      required String colCustomerPinCode,
-      required String colCustomerState,
-      required String colCustomerDistance,
-      required String colCustomerMobile,
-      required String colCustomerEmail,
-      required String colCustomerTransport,
-      required String colCustomerDiscount,
-
-    })async{
+    Future<bool> addCustomer({required CustomerModel addNewCustomer})async{
      var db = await initDB();
-     int rowEffected = await db.insert(tblCustomer, {
-       colCustomerGst: colCustomerGst,
-       colCustomerName: colCustomerName,
-       colAccountType: colAccountType,
-       colCustomerAddress1: colCustomerAddress1,
-       colCustomerAddress2: colCustomerAddress2,
-       colCustomerCity: colCustomerCity,
-       colCustomerPinCode: colCustomerPinCode,
-       colCustomerState: colCustomerState,
-       colCustomerDistance: colCustomerDistance,
-       colCustomerMobile: colCustomerMobile,
-       colCustomerEmail: colCustomerEmail,
-       colCustomerTransport: colCustomerTransport,
-       colCustomerDiscount: colCustomerDiscount,
-     });
+     int rowEffected = await db.insert(tblCustomer, addNewCustomer.toMap());
       return rowEffected > 0;
    }
 
-   Future<List<Map<String, dynamic?>>> getAllCustomer()async{
+   Future<List<Map<String, dynamic>>> getAllCustomer()async{
     var db = await initDB();
     return db.query(tblCustomer);
    }
+
+    Future<bool> deleteCustomer(int customerId) async {
+      var db = await initDB();
+      int rowsAffected = await db.delete(
+        tblCustomer,
+        where: "$colCustomerId = ?", whereArgs: [customerId],
+      );
+      return rowsAffected > 0;
+    }
+
+  Future<bool> updateCustomerModel(CustomerModel customer) async {
+    var db = await initDB();
+
+    Map<String, dynamic> updateMap = {};
+
+    if (customer.name.isNotEmpty) updateMap[colCustomerName] = customer.name;
+    if (customer.gstNumber != null) updateMap[colCustomerGst] = customer.gstNumber;
+    if (customer.customerAccountType != null) updateMap[colAccountType] = customer.customerAccountType;
+    if (customer.address1 != null) updateMap[colCustomerAddress1] = customer.address1;
+    if (customer.address2 != null) updateMap[colCustomerAddress2] = customer.address2;
+    if (customer.city != null) updateMap[colCustomerCity] = customer.city;
+    if (customer.pinCode != null) updateMap[colCustomerPinCode] = customer.pinCode;
+    if (customer.state != null) updateMap[colCustomerState] = customer.state;
+    if (customer.distance != null) updateMap[colCustomerDistance] = customer.distance;
+    if (customer.mobNumber != null) updateMap[colCustomerMobile] = customer.mobNumber;
+    if (customer.email != null) updateMap[colCustomerEmail] = customer.email;
+    if (customer.transport != null) updateMap[colCustomerTransport] = customer.transport;
+    if (customer.discount != null) updateMap[colCustomerDiscount] = customer.discount;
+
+    if (updateMap.isEmpty || customer.id == null) return false;
+
+    int rowsAffected = await db.update(
+      tblCustomer,
+      updateMap,
+      where: "$colCustomerId = ?",
+      whereArgs: [customer.id],
+    );
+
+    return rowsAffected > 0;
+  }
 
   }
