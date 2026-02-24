@@ -60,6 +60,14 @@ class _SaleModuleState extends State<SaleModule> {
           ),
           SizedBox(height: 21,),
           TextField(
+            decoration: InputDecoration(
+              hint: Text("Discount %"),
+              //suffixIcon: Icon(Icons.arrow_forward_ios_outlined, size: 15,),
+              prefixIcon: Icon(Icons.discount),
+            ),
+          ),
+          SizedBox(height: 21,),
+          TextField(
             onTap: (){
               DateTime.now();
             },

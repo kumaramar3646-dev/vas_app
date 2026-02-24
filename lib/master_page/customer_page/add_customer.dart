@@ -49,7 +49,38 @@ class AddCustomer extends StatefulWidget {
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
-      body: Stack(
+      body: /*SizedBox(
+        height: 55,
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: "Search",
+            prefixIcon: Icon(Icons.search),
+            suffixIcon: Icon(Icons.filter_alt_outlined),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(11),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: EdgeInsets.all(11),
+            hintStyle: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+            prefixIconColor: Colors.blue,
+            suffixIconColor: Colors.blue,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(11),
+              borderSide: BorderSide(color: Colors.blue),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(11),
+              borderSide: BorderSide(color: Colors.blue),
+            ),
+          ),
+
+        ),
+      ),*/
+       Stack(
         children: [
           mAddCustomer.isNotEmpty ? ListView.builder(
               itemCount: mAddCustomer.length,
@@ -95,25 +126,39 @@ class AddCustomer extends StatefulWidget {
                                   TransPortController.text = mAddCustomer[inex]['customerTransport'] ?? "";
                                   DiscountController.text = mAddCustomer[inex]['customerDiscount'] ?? "";
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 50),
+                                    padding: const EdgeInsets.symmetric(vertical: 51),
                                     child: Container(
-                                      padding: EdgeInsets.all(16),
+                                      padding: EdgeInsets.symmetric(horizontal: 11),
                                       child: Column(
                                         children: [
-                                          Text("Edit Customer", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                                          Text("Edit Customer", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.blue)),
+                                          SizedBox(height: 5),
                                           TextField(controller: CustomerNameController, decoration: InputDecoration(hintText: "Name")),
+                                          SizedBox(height: 5),
                                           TextField(controller: GstNumberController, decoration: InputDecoration(hintText: "Gst Number")),
+                                          SizedBox(height: 5),
                                           TextField(controller: CustomerAccountTypeController, decoration: InputDecoration(hintText: "Account Type")),
+                                          SizedBox(height: 5),
                                           TextField(controller: Address1Controller, decoration: InputDecoration(hintText: "Address1")),
+                                          SizedBox(height: 5),
                                           TextField(controller: Address2Controller, decoration: InputDecoration(hintText: "Address2")),
+                                          SizedBox(height: 05),
                                           TextField(controller: CityController, decoration: InputDecoration(hintText: "City")),
+                                          SizedBox(height: 05),
                                           TextField(controller: PinCodeController, decoration: InputDecoration(hintText: "PinCode")),
+                                          SizedBox(height: 5),
                                           TextField(controller: StateController, decoration: InputDecoration(hintText: "State")),
+                                          SizedBox(height: 5),
                                           TextField(controller: DistanceController, decoration: InputDecoration(hintText: "Distance")),
+                                          SizedBox(height: 05),
                                           TextField(controller: MobNumberController, decoration: InputDecoration(hintText: "Mobile Number")),
+                                          SizedBox(height: 5),
                                           TextField(controller: EmailController, decoration: InputDecoration(hintText: "Email")),
+                                          SizedBox(height: 5),
                                           TextField(controller: TransPortController, decoration: InputDecoration(hintText: "Transport")),
+                                          SizedBox(height: 5),
                                           TextField(controller: DiscountController, decoration: InputDecoration(hintText: "Discount")),
+                                          SizedBox(height: 21),
                                           ElevatedButton(
                                             onPressed: () async {
                                               //  Update DB
@@ -142,7 +187,7 @@ class AddCustomer extends StatefulWidget {
                                                 loadData();
                                                 Navigator.pop(context);
                                                 ScaffoldMessenger.of(context).showSnackBar(
-                                                  SnackBar(content: Text("Customer Updated Successfully")),
+                                                  SnackBar(content: Text("Customer Updated Successfully",),backgroundColor: Colors.green,),
                                                 );
                                               }
                                             },
@@ -151,9 +196,9 @@ class AddCustomer extends StatefulWidget {
                                               children: [
                                                 TextButton(onPressed: (){
                                                   Navigator.pop(context);
-                                                }, child: Text("Cancel")),
-                                                SizedBox(width: 21,),
-                                                Text("Save Changes"),
+                                                }, child: Text("Cancel", style: TextStyle(color: Colors.blue),)),
+                                                SizedBox(width: 51,),
+                                                Text("Save Changes", style: TextStyle(color: Colors.blue),),
                                               ],
                                             ),
                                           ),

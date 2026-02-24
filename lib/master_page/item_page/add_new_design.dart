@@ -16,6 +16,16 @@ class AddNewDesign extends StatelessWidget {
         child: Column(
           children: [
             Icon(Icons.category_outlined,size: 300,color: Colors.grey.shade300,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CircleAvatar(backgroundColor: Colors.blue,radius: 31, child: IconButton(onPressed: (){}, icon: Icon(Icons.image,color: Colors.white,)),),
+                SizedBox(width: 21,),
+                CircleAvatar(backgroundColor: Colors.blue,radius: 31, child: IconButton(onPressed: (){}, icon: Icon(Icons.picture_as_pdf_rounded,color: Colors.white,)),),
+                SizedBox(width: 21,),
+                CircleAvatar(backgroundColor: Colors.blue,radius: 31, child: IconButton(onPressed: (){}, icon: Icon(Icons.camera_alt,color: Colors.white,)),),
+              ],
+            ),
             TextField(
               decoration: InputDecoration(
                 hint: Text("Design Name/Number", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
