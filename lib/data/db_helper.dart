@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:vas_app/data/model/model.dart';
+import 'package:vas_app/data/model/customer_model.dart';
+
+import 'model/item_model.dart';
 
 class DbHelper {
 
@@ -22,8 +24,7 @@ class DbHelper {
 
    /// customer table
    static const String tblCustomer = "customer";
-   /// customer table column
-
+   /// customer master table column
    static String colCustomerId = "customerId";
    static String colCustomerGst = "customerGst";
    static String colCustomerName = "customerName";
@@ -38,6 +39,27 @@ class DbHelper {
    static String colCustomerEmail = "customerEmail";
    static String colCustomerTransport = "customerTransport";
    static String colCustomerDiscount = "customerDiscount";
+   /// item table
+   static const String tblItem = "item";
+   /// item master table column
+   static String colItemId = "itemId";
+   static String designName = "designName";
+   static String salePrice = "salePrice";
+   static String description = "description";
+   static String designTags = "designTags";
+   /// sale challan table
+   static const String tblSaleChallan = "saleChallan";
+   /// sale challan table column
+   static String saleChallanId = "saleChallanId";
+   static String customerName = "customerName";
+   static String category = "category";
+   static String transport = "transport";
+   static String discount = "discount";
+   static String ChallanDate = "ChallanDate";
+   static String challanNo = "challanNo";
+   static String AddItem = "AddItem";
+
+
 
   Future<Database> initDB()async{
 
@@ -52,9 +74,13 @@ class DbHelper {
       /// create all table here
       ///Customer table
       db.execute("create table $tblCustomer($colCustomerId integer primary key autoincrement, $colCustomerGst text, $colCustomerName text, $colAccountType text, $colCustomerAddress1 text, $colCustomerAddress2 text, $colCustomerCity text, $colCustomerPinCode text, $colCustomerState text, $colCustomerDistance text, $colCustomerMobile text, $colCustomerEmail text, $colCustomerTransport text, $colCustomerDiscount text)");
-      }
-     );
-   }
+      ///Item table
+      db.execute("create table $tblItem($colItemId integer primary key autoincrement, $designName text, $salePrice integer, $description text, $designTags text)");
+      ///Sale Challan table
+      db.execute("create table $tblSaleChallan($saleChallanId integer primary key autoincrement,$colCustomerId integer,$colItemId integer,$category text,$transport text,$discount text,$ChallanDate text,$challanNo text unique,foreign key($colCustomerId) references $tblCustomer($colCustomerId),foreign key($colItemId) references $tblItem($colItemId)");
+    });
+  }
+   /// =============== Add Customer ===========================
     Future<bool> addCustomer({required CustomerModel addNewCustomer})async{
      var db = await initDB();
      int rowEffected = await db.insert(tblCustomer, addNewCustomer.toMap());
@@ -105,5 +131,18 @@ class DbHelper {
 
     return rowsAffected > 0;
   }
+/// =============== Add Item ===========================
+   Future<bool> addItem({required ItemModel addNewItem})async{
+   var db = await initDB();
+   int rowEffected = await db.insert(tblItem, addNewItem.toMap());
+   return rowEffected > 0;
+   }
+
+   Future<List<Map<String, dynamic>>> getAllItem()async{
+    var db = await initDB();
+    return db.query(tblItem);
+   }
+
+
 
   }

@@ -5,19 +5,21 @@ import 'package:vas_app/master_page/transport_page/add_transport.dart';
 import '../../master_page/customer_page/add_customer.dart';
 import '../../master_page/item_page/Add_item.dart';
 
-class SaleModule extends StatefulWidget {
-  const SaleModule({super.key});
+class SaleChallan extends StatefulWidget {
 
   @override
-  State<SaleModule> createState() => _SaleModuleState();
+  State<SaleChallan> createState() => _SaleChallanState();
 }
 
-class _SaleModuleState extends State<SaleModule> {
+class _SaleChallanState extends State<SaleChallan> {
+  var dateController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sale Module", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),
+        title: Text("Sale Challan ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),
         backgroundColor: Colors.lightBlueAccent,
         foregroundColor: Colors.white,
         centerTitle: true,
@@ -25,6 +27,11 @@ class _SaleModuleState extends State<SaleModule> {
       body: Column(
         children: [
            Text("Add Challan"),
+          TextField(
+            decoration: InputDecoration(
+              hint: Text("ChallanNo"),
+            ),
+          ),
           SizedBox(height: 31,),
           TextField(
             onTap: (){
@@ -68,8 +75,19 @@ class _SaleModuleState extends State<SaleModule> {
           ),
           SizedBox(height: 21,),
           TextField(
-            onTap: (){
-              DateTime.now();
+            controller: dateController,
+            readOnly: true,
+            onTap: ()async{
+              DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(2020),
+                  lastDate: DateTime(2030),
+                  initialDate: DateTime.now(),
+              );
+              if(pickedDate != null){
+                String formattedDate = "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+                dateController.text = formattedDate;
+              }
             },
             decoration: InputDecoration(
               hint: Text("Challan Date"),

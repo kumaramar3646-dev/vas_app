@@ -1,5 +1,5 @@
 
-  import 'package:vas_app/data/model/model.dart';
+  import 'package:vas_app/data/model/customer_model.dart';
 
 abstract class MasterEvent {}
 

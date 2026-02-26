@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vas_app/data/db_helper.dart';
 
-import '../../data/model/model.dart';
+import '../../data/model/customer_model.dart';
 
 class AddCustomer extends StatefulWidget {
   const AddCustomer({super.key});
@@ -45,42 +45,25 @@ class AddCustomer extends StatefulWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Select Customer", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+        actions: [
+          IconButton(onPressed: (){},
+              icon: InkWell(
+                  onTap: (){
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search",
+                        prefixIcon: Icon(Icons.search),
+                      ),
+
+                    );
+                  },
+                  child: Icon(Icons.search))),
+        ],
         centerTitle: true,
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
-      body: /*SizedBox(
-        height: 55,
-        child: TextField(
-          decoration: InputDecoration(
-            hintText: "Search",
-            prefixIcon: Icon(Icons.search),
-            suffixIcon: Icon(Icons.filter_alt_outlined),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(11),
-            ),
-            filled: true,
-            fillColor: Colors.white,
-            contentPadding: EdgeInsets.all(11),
-            hintStyle: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-            ),
-            prefixIconColor: Colors.blue,
-            suffixIconColor: Colors.blue,
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(11),
-              borderSide: BorderSide(color: Colors.blue),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(11),
-              borderSide: BorderSide(color: Colors.blue),
-            ),
-          ),
-
-        ),
-      ),*/
-       Stack(
+      body: Stack(
         children: [
           mAddCustomer.isNotEmpty ? ListView.builder(
               itemCount: mAddCustomer.length,
@@ -375,6 +358,11 @@ class AddCustomer extends StatefulWidget {
                                              transport: TransPortController.text,
                                              discount: DiscountController.text.isNotEmpty ? int.parse(DiscountController.text) : null,),
                                          );
+                                         if(isAdded){
+                                           loadData();
+                                           ScaffoldMessenger.of(context).showSnackBar(
+                                               SnackBar(content: Text("Customer Added Successfully"),backgroundColor: Colors.green.shade300,));
+                                         }
                                         /// space clear
                                         GstNumberController.clear();
                                         CustomerNameController.clear();
@@ -389,11 +377,6 @@ class AddCustomer extends StatefulWidget {
                                         EmailController.clear();
                                         TransPortController.clear();
                                         DiscountController.clear();
-                                        if(isAdded){
-                                          loadData();
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(content: Text("Customer Added Successfully"),backgroundColor: Colors.green.shade300,));
-                                        }
                                         Navigator.pop(context);
                                       },
                                       child: Text("Save Customer")),

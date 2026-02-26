@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:vas_app/domain/app_constants.dart';
-import 'package:vas_app/domain/module/sale_module.dart';
+import 'package:vas_app/module/sale_challan/sale_challan.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -58,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(width: 51,),
                             InkWell(
                                 onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => SaleModule()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => SaleChallan()));
                                 },
 
                                 child: Icon(Icons.shopping_cart_checkout_rounded, size: 100,))

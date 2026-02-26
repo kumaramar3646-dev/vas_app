@@ -42,22 +42,24 @@ class AddCategory extends StatelessWidget {
                       ],
                     ),
                   ),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                     ListTile(
-                       leading: Text("cancel"),
-                       onTap: (){
-                         Navigator.pop(context);
-                       },
-                     ),
-                     ListTile(
-                       leading: Text("save"),
-                       onTap: (){
-                         Navigator.pop(context);
-                       },
-                     )
+                      InkWell(
+                          onTap:(){
+                            Navigator.pop(context);
+                          },
+                          child: Text("Save")),
+                      SizedBox(width: 21,),
+                      InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        
+
+                          child: Text("Cancel")),
                     ],
+                    
                   ),
 
                 );

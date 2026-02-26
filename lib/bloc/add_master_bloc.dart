@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vas_app/data/db_helper.dart';
-import 'package:vas_app/data/model/model.dart';
+import 'package:vas_app/data/model/customer_model.dart';
 import 'add_master_event.dart';
 import 'add_master_state.dart';
 

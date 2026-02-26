@@ -1,5 +1,5 @@
 
- import '../data/model/model.dart';
+ import '../data/model/customer_model.dart';
 
 abstract class MasterState {}
 
